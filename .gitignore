@@ -283,9 +283,9 @@ ServiceFabricBackup/
 *.ndf
 
 # SQLite files
-*.carins.db
-*.carins.db-shm
-*.carins.db-wal
+CarInsurance.Api/carins.db
+CarInsurance.Api/carins.db-shm
+CarInsurance.Api/carins.db-wal
 
 # Business Intelligence projects
 *.rdl.data
