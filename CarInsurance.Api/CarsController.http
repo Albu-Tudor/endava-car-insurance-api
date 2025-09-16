@@ -1,0 +1,7 @@
+### Get all cars
+GET https://localhost:61341/api/cars
+Accept: application/json
+
+### Check insurance validity for a car (example: carId=1, date=2024-06-01)
+GET https://localhost:61341/api/cars/1/insurance-valid?date=2024-06-01
+Accept: application/json
