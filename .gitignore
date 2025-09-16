@@ -282,6 +282,11 @@ ServiceFabricBackup/
 *.ldf
 *.ndf
 
+# SQLite files
+*.carins.db
+*.carins.db-shm
+*.carins.db-wal
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout
