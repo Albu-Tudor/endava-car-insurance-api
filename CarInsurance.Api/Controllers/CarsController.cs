@@ -1,5 +1,6 @@
 using CarInsurance.Api.Dtos;
 using CarInsurance.Api.Services;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarInsurance.Api.Controllers;
@@ -28,6 +29,24 @@ public class CarsController(CarService service) : ControllerBase
         catch (KeyNotFoundException)
         {
             return NotFound();
+        }
+    }
+
+    [HttpPost("cars/{carId:long}/claims")]
+    public async Task<ActionResult<ClaimDto>> CreateClaim(long carId, [FromBody] CreateClaimRequest request)
+    {
+        try
+        {
+            var claim = await _service.CreateClaimAsync(carId, request);
+            return CreatedAtAction(nameof(CreateClaim), new { carId, claimId = claim.Id }, claim);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
         }
     }
 }
