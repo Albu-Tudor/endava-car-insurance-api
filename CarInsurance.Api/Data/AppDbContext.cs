@@ -9,6 +9,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Car> Cars => Set<Car>();
     public DbSet<InsurancePolicy> Policies => Set<InsurancePolicy>();
     public DbSet<InsuranceClaim> Claims => Set<InsuranceClaim>();
+    public DbSet<ProcessingState> ProcessingStates => Set<ProcessingState>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,6 +36,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<InsuranceClaim>()
             .Property(c => c.Amount)
             .HasPrecision(18, 2);
+
+        modelBuilder.Entity<ProcessingState>()
+            .Property(p => p.Value)
+            .IsRequired();
     }
 }
 
@@ -56,8 +61,12 @@ public static class SeedData
 
         db.Policies.AddRange(
             new InsurancePolicy { CarId = car1.Id, Provider = "Allianz", StartDate = new DateOnly(2024,1,1), EndDate = new DateOnly(2024,12,31) },
-            new InsurancePolicy { CarId = car1.Id, Provider = "Groupama", StartDate = new DateOnly(2025,1,1), EndDate = new DateOnly(2025, 12, 31) },
+            new InsurancePolicy { CarId = car1.Id, Provider = "Groupama", StartDate = new DateOnly(2025,1,1), EndDate = new DateOnly(2025, 2, 20) },
             new InsurancePolicy { CarId = car2.Id, Provider = "Allianz", StartDate = new DateOnly(2025,3,1), EndDate = new DateOnly(2025,9,30) }
+        );
+
+        db.ProcessingStates.Add(
+            new ProcessingState { Key = "PolicyExpirationChecker.LastRunUtc", Value = new DateOnly(2024, 1, 1) }
         );
         db.SaveChanges();
     }
